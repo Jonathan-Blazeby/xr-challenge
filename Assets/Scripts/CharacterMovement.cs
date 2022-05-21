@@ -6,16 +6,37 @@ public class CharacterMovement : MonoBehaviour
 {
     private CharacterController charControl;
     private CapsuleCollider coll;
+    private PlayerAnimator anim;
+    private PlayerHealth health;
+    [SerializeField] private Vector3 playerStart;
     private Vector3 playerVel;
-    private bool grounded;
-    private float playerSpeed = 3.0f;
-    private float jumpHeight = 1.5f;
+    [SerializeField] private float playerSpeed = 4.5f;
+    [SerializeField] private float jumpHeight = 2.5f;
     private float gravity = 9.81f;
+    [SerializeField] private bool grounded;
+
+    #region Getters
+    public Vector3 PlayerStart() { return playerStart; }
+    public Vector3 PlayerVel() { return playerVel; }
+    public float PlayerSpeed() {  return playerSpeed; }
+    public float PlayerJumpHeight() { return jumpHeight; }
+    public float PlayerGravity() { return gravity; }
+    #endregion
+    #region Setters
+    public void PlayerStart(Vector3 v) { playerStart = v; }
+    public void PlayerVel(Vector3 v) { playerVel = v; }
+    public void PlayerSpeed(float f) { playerSpeed = f; }
+    public void PlayerJumpHeight(float f) { jumpHeight = f; }
+    public void PlayerGravity(float f) { gravity = f; }
+    #endregion
 
     void Awake()
     {
-        charControl = gameObject.GetComponent<CharacterController>();
-        coll = gameObject.GetComponent<CapsuleCollider>();
+        charControl = GetComponent<CharacterController>();
+        coll = GetComponent<CapsuleCollider>();
+        anim = GetComponentInChildren<PlayerAnimator>();
+        health = GetComponent<PlayerHealth>();
+        playerStart = transform.position;
     }
 
     void Update()
@@ -31,7 +52,6 @@ public class CharacterMovement : MonoBehaviour
             playerVel.y -= gravity * Time.deltaTime;
         }
 
-
         float xDir = Input.GetAxis("Horizontal");
         float yDir = Input.GetAxis("Vertical");
 
@@ -43,6 +63,9 @@ public class CharacterMovement : MonoBehaviour
         {
             gameObject.transform.forward = moveDir;
         }
+
+
+        anim.UpdateValues(charControl.velocity.magnitude);
 
         if (Input.GetButtonDown("Jump") && grounded)
         {
@@ -59,14 +82,38 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, Vector3.down, coll.bounds.extents.y + 0.05f);
+        Ray ray = new Ray(transform.position, Vector3.down);
+        bool g = Physics.Raycast(ray, out RaycastHit hit, coll.bounds.extents.y - (coll.height / 2) + 0.05f);
+        if(g == true)
+        {     
+            if (hit.collider.gameObject.CompareTag("Lava"))
+            {
+                return false;
+            }
+        }
+
+        return g;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Pickup")
+        if (other.gameObject.CompareTag("Pickup"))
         {
             GameController.GameCon.UpdateScore(other.gameObject.GetComponent<Pickup>().GetPickedUp());
+            
+        }
+        else if(other.gameObject.name == "EndZone")
+        {
+            GameController.GameCon.TryWin();
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Lava"))
+        {
+            health.UpdateHealth(PlayerHealth.damageSources.lava);
+
         }
     }
 }
