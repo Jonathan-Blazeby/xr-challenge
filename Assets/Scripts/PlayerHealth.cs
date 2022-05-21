@@ -40,6 +40,7 @@ public class PlayerHealth : MonoBehaviour
                     playerHealth -= (int)damageSources.lava;
                     Debug.Log("Damage From Lava: -20% Health");
                     damageElapsedTime = 0;
+                    GetComponent<AudioSource>().Play();
                 }
                 break;
             case damageSources.bullet:
@@ -48,6 +49,7 @@ public class PlayerHealth : MonoBehaviour
                     playerHealth -= (int)damageSources.bullet;
                     Debug.Log("Damage From Bullet: -10% Health");
                     damageElapsedTime = 0;
+                    GetComponent<AudioSource>().Play();
                 }
                 break;
         }
