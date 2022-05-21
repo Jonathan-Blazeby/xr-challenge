@@ -88,7 +88,12 @@ public class GameController : MonoBehaviour
             messageText.text = "You won! Thank you for playing!";
             Invoke("ResetText", 5);
             Invoke("Reset", 5);
-        }        
+        }    
+        else
+        {
+            messageText.text = "You still need more stars";
+            Invoke("ResetText", 3);
+        }
     }
 
     public void Death()
@@ -108,22 +113,12 @@ public class GameController : MonoBehaviour
         score = 0;
         UpdateScore(0);
         finishAllowed = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);        
+    }
 
-        //GameObject[] Pickups = GameObject.FindGameObjectsWithTag("Pickup");
-        //foreach(GameObject p in Pickups)
-        //{
-        //    p.GetComponent<Pickup>().Init();
-        //}
-
-        //player.transform.position = player.GetComponent<CharacterMovement>().PlayerStart();
-        //player.GetComponent<CharacterMovement>().PlayerVel(new Vector3(0.0f, 0.0f, 0.0f));
-
-        
-        //Invoke("ResetText", 0);
-        //player.GetComponent<PlayerHealth>().ResetMaxHealth();
-        //player.GetComponent<PlayerHealth>().UpdateHealth(PlayerHealth.damageSources.nothing);
-        
+    public bool CheckFinishAllowed()
+    {
+        return finishAllowed;
     }
 
 }

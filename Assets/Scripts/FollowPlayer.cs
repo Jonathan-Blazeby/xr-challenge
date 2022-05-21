@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
+    private Transform listener;
     private Transform player;
     private Vector3 startOffset;
 
     // Start is called before the first frame update
     void Start()
     {
+        listener =  transform.GetChild(0).transform;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         startOffset = transform.position;
     }
@@ -18,5 +20,6 @@ public class FollowPlayer : MonoBehaviour
     void Update()
     {
         transform.position = player.transform.position + startOffset;
+        listener.position = player.transform.position;
     }
 }

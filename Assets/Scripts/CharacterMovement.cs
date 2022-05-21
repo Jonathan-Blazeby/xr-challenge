@@ -102,8 +102,18 @@ public class CharacterMovement : MonoBehaviour
             GameController.GameCon.UpdateScore(other.gameObject.GetComponent<Pickup>().GetPickedUp());
             
         }
+        else if (other.gameObject.CompareTag("Lava"))
+        {
+            Transform lavaHiss = other.gameObject.transform.GetChild(0);
+            lavaHiss.position = transform.position;
+            lavaHiss.GetComponent<AudioSource>().Play();
+        }
         else if(other.gameObject.name == "EndZone")
         {
+            if(GameController.GameCon.CheckFinishAllowed())
+            {
+                other.gameObject.GetComponent<AudioSource>().Play();
+            }
             GameController.GameCon.TryWin();
         }
     }
@@ -112,8 +122,8 @@ public class CharacterMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Lava"))
         {
-            health.UpdateHealth(PlayerHealth.damageSources.lava);
 
+            health.UpdateHealth(PlayerHealth.damageSources.lava);
         }
     }
 }
