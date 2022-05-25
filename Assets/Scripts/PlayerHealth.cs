@@ -24,6 +24,9 @@ public class PlayerHealth : MonoBehaviour
         damageElapsedTime += Time.deltaTime;
     }
 
+    /// <summary>
+    /// Called when damage taken, updates health according to type of damageSource IF its been 1s or more since last instance of damage, plays player pain audio
+    /// </summary>
     public void UpdateHealth(damageSources source)
     {
         if(invincible)
@@ -32,7 +35,7 @@ public class PlayerHealth : MonoBehaviour
         }
         switch (source)
         {
-            case damageSources.nothing:
+            case damageSources.nothing: //Used when healthbar needs refill, but no damage taken
                 break;
             case damageSources.lava:
                 if (damageElapsedTime >= damageTimeDelay)

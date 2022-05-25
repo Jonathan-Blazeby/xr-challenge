@@ -86,7 +86,7 @@ public class CharacterMovement : MonoBehaviour
         bool g = Physics.Raycast(ray, out RaycastHit hit, coll.bounds.extents.y - (coll.height / 2) + 0.05f);
         if(g == true)
         {     
-            if (hit.collider.gameObject.CompareTag("Lava"))
+            if (hit.collider.gameObject.CompareTag("Lava")) // Could also work for any other 'liquid' that needs to have  collider but would otherwise mess up IsGrounded
             {
                 return false;
             }

@@ -1,6 +1,52 @@
 Features Implemented:
-Player movement left, right, forward, backward with WASD
-Player Jumping with Space bar
-Camera moves with player
-Pickup 'picked up' when player collides with it
-Score UI changes when pickup 'picked up'
+	Player:
+		Movement left, right, forward, backward with WASD
+		Jumping with Space bar
+		3D humanoid model
+		Animation for both idle and movement (except jumping)
+	Camera:
+		Moves with player
+		Audio Listener set to player position but camera direction for proper effect
+	Pickups:
+		Pickup 'picked up' when player collides with it, as using the given (unchanged) Pickup script
+		Score UI changes when pickup 'picked up'
+		Audio played upon pickup
+	GUI:
+		Score UI changes when pickups are 'picked up'
+		Player Healthbar added
+		Text will appear in centre of screen to display relevant messages such as "You Died", etc.
+	Hazards/Enemies:
+		PlayerHealth in General:
+			Player starts with 100% health
+			When damage taken 'pain' audio is played
+			Damage can only be taken every one second
+		Lava Pool:
+			Player takes 20% damage every 1 second they are in there
+			Audio played upon entering
+		Turrets:
+			When player enters detection range, top of turrets begin to rotate toward player and start firing bullets
+			Player takes 10% damage when hit by bullet (though not more than once in a 1 second instance)
+			Line renderer appears to better show turret direction and detection range
+ 			Audio played when each bullet is fired
+	Game-Loop:
+		Player starts in level with max health and zero score
+		When player has collected all the pickups, a message is displayed directing them to the endzone
+		If endzone touched victory message is played and level resets (alt message plays and no reset if endzone touched before all pickups collected)
+		If player health reaches zero, no more damage taken, Death message appears, level resets 
+	Environment:
+		Lunar crater terrain with texture, normal, and height maps
+		New Skybox added
+		Stairs used to demonstrate that the player can walk easily up steps, platforms added to demonstrate jumping
+		Translucent boundary walls restrict player to level (though without them, if player falls off level they die and level resets)
+		Particle effects on lava and rocket
+
+Proposed Improvements:
+	Either proper Camera controls, or committing to the fixed isometric view in all aspects of gameplay
+	More levels beyond the testing sandbox I put together
+	Enemies beyond just the turrets (ones that move and have more complex AI)
+	Proper Jumping animation for the player
+	Rocketship would blast off in little cutscene when you win
+	More detailed player model/texture (likely an astronaut to fit with rest of game) 
+
+Comments/Thoughts:
+	A very fun challenge with a lot of room for experimentation, though in some ways perhaps a bit too open ended. If some people had the time available to spend every waking hour of the full week on this, they could produce a full games worth of content, which may show them in better light than somebody who has other work commitments during that time. 

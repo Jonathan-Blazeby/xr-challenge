@@ -29,7 +29,6 @@ public class GameController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -40,7 +39,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); //Prevents there being 2 menu controller objects when returning to main menu
+            Destroy(gameObject); //Prevents there being 2 menu controller objects when reseting
         }      
 
         scoreText = GameObject.Find("ScoreText").GetComponent<TMPro.TextMeshProUGUI>();
@@ -65,6 +64,9 @@ public class GameController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Called when Pickup picked up, updates score GUI, when all Pickups collected outputs relevant message
+    /// </summary>
     public void UpdateScore(int scoreChange)
     {
         if(scoreChange != -1)
@@ -81,6 +83,9 @@ public class GameController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called if player enters EndZone, checks if all stars have been collected, outputs relevant message, calls reset if victory
+    /// </summary>
     public void TryWin()
     {
         if(finishAllowed)
@@ -96,6 +101,9 @@ public class GameController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called if player's health reduced to zero (or falls off map)
+    /// </summary>
     public void Death()
     {
         messageText.text = "You Died!";
@@ -103,11 +111,17 @@ public class GameController : MonoBehaviour
         Invoke("Reset", 3);
     }
 
+    /// <summary>
+    /// Sets message text to empty
+    /// </summary>
     private void ResetText()
     {
         messageText.text = "";
     }
 
+    /// <summary>
+    /// Reloads the scene and sets GameContoller variables back to zero
+    /// </summary>
     private void Reset()
     {
         score = 0;
@@ -116,6 +130,9 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);        
     }
 
+    /// <summary>
+    /// Checks for if victory condition is met
+    /// </summary>
     public bool CheckFinishAllowed()
     {
         return finishAllowed;

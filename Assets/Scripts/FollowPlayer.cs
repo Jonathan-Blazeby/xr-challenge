@@ -8,7 +8,6 @@ public class FollowPlayer : MonoBehaviour
     private Transform player;
     private Vector3 startOffset;
 
-    // Start is called before the first frame update
     void Start()
     {
         listener =  transform.GetChild(0).transform;
@@ -16,7 +15,6 @@ public class FollowPlayer : MonoBehaviour
         startOffset = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.position = player.transform.position + startOffset;
