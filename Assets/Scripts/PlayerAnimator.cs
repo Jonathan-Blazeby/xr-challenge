@@ -13,6 +13,9 @@ public class PlayerAnimator : MonoBehaviour
         speed = Animator.StringToHash("Speed");
     }
 
+    /// <summary>
+    /// Updates the animator attached to the player as to the player's current speed
+    /// </summary>
     public void UpdateValues(float playerSpeed)
     {
         if(playerSpeed > 4.5f)
